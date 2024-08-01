@@ -5,7 +5,9 @@
     "target": "ES2022",
     "sourceMap": true,
     "outDir": "dist",
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "rootDir": "src"  // Specifies that the root directory of your source files is the "src" folder
   },
-  "include": ["src/**/*.ts", "src/index.ts"]
+  "include": ["src/**/*.ts", "src/index.ts"],
+  "exclude": ["node_modules", "dist"]
 }
