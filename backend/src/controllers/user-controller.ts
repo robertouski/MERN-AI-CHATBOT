@@ -60,4 +60,4 @@ export const userSignup = async (
   }
 };
 
-export default { getAllUsers, userSignup };
+export default { getAllUsers, userSignup, userLogin };
