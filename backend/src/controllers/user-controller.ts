@@ -1,6 +1,8 @@
 import User from "../models/user.js";
 import { NextFunction, Request, Response } from "express";
 import { hash, compare } from "bcrypt";
+import { createToken } from "../utils/token_manager.js";
+import { COOKIE_NAME } from "../utils/constants.js";
 
 export const getAllUsers = async (
   req: Request,
@@ -22,7 +24,7 @@ export const userLogin = async (
   next: NextFunction
 ) => {
   try {
-    console.log("user trying to login")
+    console.log("user trying to login");
     //user login
     const { email, password } = req.body;
     const user = await User.findOne({ email });
@@ -33,12 +35,34 @@ export const userLogin = async (
     if (!isPasswordValid) {
       return res.status(400).json({ message: "Invalid password" });
     }
+
+    //create and store cookie and send response
+    res.clearCookie(COOKIE_NAME, {
+      path: "/",
+      domain: "localhost",
+      httpOnly: true,
+      signed: true,
+    });
+
+    const token = createToken(user._id.toString(), user.email, "7d");
+    const expires = new Date();
+    expires.setDate(expires.getDate() + 7);
+    res.cookie(COOKIE_NAME, token, {
+      path: "/",
+      domain: "localhost",
+      expires,
+      httpOnly: true,
+      signed: true,
+      secure: true,
+      sameSite: "none",
+    });
     return res.status(200).json({ message: "Ok", id: user._id.toString() });
   } catch (error) {
     console.log("ERROR", error);
     return res.status(500).json({ message: "ERROR", cause: error.message });
   }
 };
+
 export const userSignup = async (
   req: Request,
   res: Response,
