@@ -24,7 +24,6 @@ export const userLogin = async (
   next: NextFunction
 ) => {
   try {
-    console.log("user trying to login");
     //user login
     const { email, password } = req.body;
     const user = await User.findOne({ email });
@@ -45,6 +44,7 @@ export const userLogin = async (
     });
 
     const token = createToken(user._id.toString(), user.email, "7d");
+    console.log("createToken", token);
     const expires = new Date();
     expires.setDate(expires.getDate() + 7);
     res.cookie(COOKIE_NAME, token, {
@@ -52,11 +52,9 @@ export const userLogin = async (
       domain: "localhost",
       expires,
       httpOnly: true,
-      signed: true,
-      secure: true,
-      sameSite: "none",
+      signed: true
     });
-    return res.status(200).json({ message: "Ok", id: user._id.toString() });
+    return res.status(200).json({ message: "Ok", name:user.name, email:user.email });
   } catch (error) {
     console.log("ERROR", error);
     return res.status(500).json({ message: "ERROR", cause: error.message });
@@ -70,12 +68,12 @@ export const userSignup = async (
 ) => {
   try {
     //user signup
-    const { username, email, password } = req.body;
+    const { name, email, password } = req.body;
     const existingUser = await User.findOne({ email });
     if (existingUser)
       return res.status(400).json({ message: "User already exists" });
     const hashedPassword = await hash(password, 10);
-    const user = new User({ username, email, password: hashedPassword });
+    const user = new User({ name, email, password: hashedPassword });
     await user.save();
     return res.status(201).json({ message: "Ok", id: user._id.toString() });
   } catch (error) {
