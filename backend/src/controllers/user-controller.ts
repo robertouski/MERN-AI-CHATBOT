@@ -44,7 +44,6 @@ export const userLogin = async (
     });
 
     const token = createToken(user._id.toString(), user.email, "7d");
-    console.log("createToken", token);
     const expires = new Date();
     expires.setDate(expires.getDate() + 7);
     res.cookie(COOKIE_NAME, token, {
@@ -76,6 +75,27 @@ export const userSignup = async (
     const user = new User({ name, email, password: hashedPassword });
     await user.save();
     return res.status(201).json({ message: "Ok", id: user._id.toString() });
+  } catch (error) {
+    console.log("ERROR", error);
+    return res.status(500).json({ message: "ERROR", cause: error.message });
+  }
+};
+
+export const verifyUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  //user token check
+  try {
+    const user = await User.findById(res.locals.jwtData.id);
+    if (!user) {
+      return res.status(401).json({ message: "User not registered or Token malfunctioned" });
+    }
+    if (user._id.toString() !== res.locals.jwtData.id) {
+      return res.status(401).json({ message: "Permissions didn't match" });
+    }
+    return res.status(200).json({ message: "Ok", name:user.name, email:user.email });
   } catch (error) {
     console.log("ERROR", error);
     return res.status(500).json({ message: "ERROR", cause: error.message });
