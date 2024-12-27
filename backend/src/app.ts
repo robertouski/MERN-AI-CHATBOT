@@ -2,25 +2,17 @@ import express from "express";
 import { config } from "dotenv";
 import morgan from "morgan";
 import appRouter from "./routes/index.js";
+import cookieParser from "cookie-parser";
+import cors from "cors";
 
+const COOKIE_SECRET = process.env.COOKIE_SECRET || "secret"; 
 config();
 
 const app = express();
 
+app.use(cors({origin: "http://localhost:5173", credentials: true}))
 app.use(express.json());
-
-app._router.stack.forEach((middleware) => {
-  if (middleware.route) {
-    console.log(middleware.route);
-  } else if (middleware.name === 'router') {
-    middleware.handle.stack.forEach((handler) => {
-      if (handler.route) {
-        console.log(handler.route);
-      }
-    });
-  }
-});
-
+app.use(cookieParser(COOKIE_SECRET))
 
 //remove it in production
 app.use(morgan("dev"))

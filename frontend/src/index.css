@@ -1,0 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+hmtl,
+body{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background: #020F19;
+  font-family: 'Work Sans', sans-serif;
+
+}
+
+.image-inverted{
+  filter: invert(0%);
+}
+.nav-link{
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-right: 10px ;
+  margin-left: 10px ;
+  padding: 8px 20px;
+  border-radius: 10px;
+  text-decoration: none;
+  letter-spacing: 1px;
+}
+

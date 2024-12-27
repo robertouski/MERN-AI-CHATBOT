@@ -17,12 +17,12 @@ const chatSchema = new Schema({
   },
 });
 const userSchema = new Schema({
-  username: {
+  name: {
     type: String,
-    required: [true, "Username is required"],
+    required: [true, "Name is required"],
     unique: true,
     trim: true,
-    minlength: [3, "Username must be at least 3 characters long"],
+    minlength: [3, "Name must be at least 3 characters long"],
   },
   email: {
     type: String,

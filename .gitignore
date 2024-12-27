@@ -2,3 +2,6 @@ node_modules/
 *.env
 dist/
 backend/.env
+.vscode/*
+!.vscode/extensions.json
+README.md
