@@ -3,9 +3,10 @@ import { red } from "@mui/material/colors";
 import { useAuth } from "../context/AuthContext";
 import ChatItem from "../components/chat/ChatItem";
 import { IoMdSend } from "react-icons/io";
-import { useRef, useState } from "react";
-import { sendChatRequest } from "../helpers/api-communicator";
+import { useLayoutEffect, useRef, useState } from "react";
+import {getUserChats, sendChatRequest } from "../helpers/api-communicator";
 import "../components/chat/Chat.css";
+import toast from "react-hot-toast";
 type Message = {
   content: string;
   role: "user" | "assistant";
@@ -29,6 +30,7 @@ const Chat = () => {
       const chatData = await sendChatRequest(content);
       if (chatData && chatData.chats) {
         setChatMessages([...chatData.chats]);
+        console.log(chatData.chats);
       } else {
         console.error("Invalid response from server:", chatData);
       }
@@ -36,6 +38,30 @@ const Chat = () => {
       console.error("Error sending chat request:", error);
     }
   };
+  console.log(auth);
+  useLayoutEffect(() => {
+    if (auth?.isLoggedIn && auth.user) {
+      toast.loading("Loading Chats...", {
+        id: "loadchats",
+        position: "top-right",
+      });
+      getUserChats()
+        .then((data) => {
+          setChatMessages([...data.chats]);
+          toast.success("Chats loaded successfully", {
+            id: "loadchats",
+            position: "top-right",
+          });
+        })
+        .catch((error) => {
+          console.error("Error loading chats", error);
+          toast.error("Error loading chats", {
+            id: "loadchats",
+            position: "top-right",
+          });
+        });
+    }
+  }, [auth?.isLoggedIn, auth?.user]);
   return (
     <Box
       sx={{
@@ -69,7 +95,7 @@ const Chat = () => {
             overflowX: "hidden",
             overflowY: "auto",
           }}
-          className="custom-scrollbar" 
+          className="custom-scrollbar"
         >
           <Avatar
             sx={{
@@ -131,11 +157,12 @@ const Chat = () => {
           flexDirection: "column",
           mx: "auto",
           width: "100%",
+          maxWidth: "900px",
         }}
       >
         <Typography
           sx={{
-            textAlign: "right",
+            textAlign: "center",
             fontSize: "30px",
             color: "white",
             mb: 1,
@@ -157,13 +184,25 @@ const Chat = () => {
             flexDirection: "column",
             bgcolor: "#0D1C24",
             overflow: "hidden",
-            overflowX: "hidden",
+            overflowX: "auto",
             overflowY: "auto",
+            padding: "10px",
+            wordWrap: "break-word",
+            whiteSpace: "pre-wrap",
           }}
           className="custom-scrollbar"
         >
           {chatMessages.map((chat, index) => (
-            <ChatItem content={chat.content} role={chat.role} key={index} />
+            <Box
+              key={index}
+              sx={{
+                wordWrap: "break-word",
+                whiteSpace: "pre-wrap",
+                mb: 1,
+              }}
+            >
+              <ChatItem content={chat.content} role={chat.role} />
+            </Box>
           ))}
         </Box>
         <div
@@ -177,7 +216,7 @@ const Chat = () => {
           }}
         >
           <input
-          ref= {inputRef}
+            ref={inputRef}
             type="text"
             style={{
               width: "100%",
@@ -191,7 +230,10 @@ const Chat = () => {
               fontSize: "20px",
             }}
           />
-          <IconButton onClick={handleSubmit} sx={{ ml: "auto", color: "white" }}>
+          <IconButton
+            onClick={handleSubmit}
+            sx={{ ml: "auto", color: "white" }}
+          >
             <IoMdSend />
           </IconButton>
         </div>

@@ -18,6 +18,14 @@ export const generateChatCompletion = async (
       return res
         .status(401)
         .json({ message: "User not registered or Token malfunctioned" });
+    const lastMessage = user.chats[user.chats.length - 1];
+    if (
+      lastMessage &&
+      lastMessage.content === message &&
+      lastMessage.role === "user"
+    ) {
+      return res.status(200).json({ chats: user.chats });
+    }
     const chats = user.chats.map(({ role, content }) => ({
       role,
       content,
@@ -37,6 +45,30 @@ export const generateChatCompletion = async (
     res.status(200).json({
       chats: user.chats,
     });
+
+  } catch (error) {
+    console.log("ERROR", error);
+    return res.status(500).json({ message: "ERROR", cause: error.message });
+  }
+};
+
+
+
+export const sendChatsToUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  //user token check
+  try {
+    const user = await User.findById(res.locals.jwtData.id);
+    if (!user) {
+      return res.status(401).json({ message: "User not registered or Token malfunctioned" });
+    }
+    if (user._id.toString() !== res.locals.jwtData.id) {
+      return res.status(401).json({ message: "Permissions didn't match" });
+    }
+    return res.status(200).json({ message: "Ok", chats: user.chats });
   } catch (error) {
     console.log("ERROR", error);
     return res.status(500).json({ message: "ERROR", cause: error.message });
