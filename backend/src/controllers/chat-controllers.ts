@@ -74,3 +74,20 @@ export const sendChatsToUser = async (
     return res.status(500).json({ message: "ERROR", cause: error.message });
   }
 };
+
+
+export const deleteChats = async (req, res, next) => {
+  try {
+    const user = await User.findById(res.locals.jwtData.id);
+    if (!user) {
+      return res.status(401).json({ message: "User not registered or Token malfunctioned" });
+    }
+    //@ts-ignore
+    user.chats = [];
+    await user.save();  // Asegúrate de guardar el documento tras modificarlo.
+    return res.status(200).json({ message: "Chats deleted successfully" });  // Envía una confirmación explícita.
+  } catch (error) {
+    console.error("Error deleting chats:", error);
+    return res.status(500).json({ message: "ERROR", cause: error.message });
+  }
+};

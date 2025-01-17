@@ -54,6 +54,16 @@ export const getUserChats = async () => {
   }
 };
 
+export const deleteUserChats = async () => {
+  const res = await axios.delete("/chat/delete");
+  if (res.status !== 200) {
+    console.log("Unable to delete chats");
+    throw new Error(res.data.message);
+  }
+  const data = await res.data;
+  return data;
+};
+
 export const checkAuthStatus = async () => {
   const res = await axios.get("/user/auth-status");
   if (res.status !== 200) {

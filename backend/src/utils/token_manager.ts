@@ -27,14 +27,3 @@ export const verifyToken = async (
     return res.status(401).json({ message: "Token Expired" });
   }
 };
-
-// export const verifyToken = async (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   console.log("Im here")
-//   const token = req.signedCookies[`${COOKIE_NAME}`];
-//   console.log(token);
-
-// };

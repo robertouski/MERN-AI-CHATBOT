@@ -3,21 +3,40 @@ import { red } from "@mui/material/colors";
 import { useAuth } from "../context/AuthContext";
 import ChatItem from "../components/chat/ChatItem";
 import { IoMdSend } from "react-icons/io";
-import { useLayoutEffect, useRef, useState } from "react";
-import {getUserChats, sendChatRequest } from "../helpers/api-communicator";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  deleteUserChats,
+  getUserChats,
+  sendChatRequest,
+} from "../helpers/api-communicator";
 import "../components/chat/Chat.css";
 import toast from "react-hot-toast";
 type Message = {
+  _id?: string;
   content: string;
   role: "user" | "assistant";
 };
 
 const Chat = () => {
+  const chatContainerRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const auth = useAuth();
   const [chatMessages, setChatMessages] = useState<Message[]>([]);
+
+  const handleKeyPress = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      handleSubmit();
+    }
+  };
+
   const handleSubmit = async () => {
-    const content = inputRef.current?.value as string;
+    const content = inputRef.current?.value.trim() as string;
+    if (!content) {
+      // Podrías mostrar una notificación o simplemente no hacer nada si el contenido está vacío
+      toast.error("Please enter a message before sending.");
+      return;
+    }
     if (inputRef.current) {
       inputRef.current.value = "";
     }
@@ -29,8 +48,10 @@ const Chat = () => {
     try {
       const chatData = await sendChatRequest(content);
       if (chatData && chatData.chats) {
-        setChatMessages([...chatData.chats]);
-        console.log(chatData.chats);
+        const newChats = chatData.chats.filter(
+          (chat: Message) => !chatMessages.some((msg) => msg._id === chat._id)
+        );
+        setChatMessages([...chatMessages, ...newChats]);
       } else {
         console.error("Invalid response from server:", chatData);
       }
@@ -38,7 +59,36 @@ const Chat = () => {
       console.error("Error sending chat request:", error);
     }
   };
-  console.log(auth);
+
+  const handleDeleteChats = async () => {
+    try {
+      await deleteUserChats();
+      toast.loading("Deleting Chats...", {
+        id: "deletechats",
+        position: "top-right",
+      });
+      setChatMessages([]);
+      toast.success("Chats deleted successfully", {
+        id: "deletechats",
+        position: "top-right",
+      });
+    } catch (error) {
+      console.error("Error deleting chat:", error);
+      toast.error("Error deleting chat", {
+        id: "deletechats",
+        position: "top-right",
+      });
+    }
+  };
+
+
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      const { scrollHeight, clientHeight } = chatContainerRef.current;
+      chatContainerRef.current.scrollTo(0, scrollHeight - clientHeight);
+    }
+  }, [chatMessages]);
+
   useLayoutEffect(() => {
     if (auth?.isLoggedIn && auth.user) {
       toast.loading("Loading Chats...", {
@@ -62,6 +112,7 @@ const Chat = () => {
         });
     }
   }, [auth?.isLoggedIn, auth?.user]);
+
   return (
     <Box
       sx={{
@@ -81,6 +132,7 @@ const Chat = () => {
         }}
       >
         <Box
+          className="custom-scrollbar"
           sx={{
             display: "flex",
             width: "100%",
@@ -92,10 +144,9 @@ const Chat = () => {
             mt: 2,
             borderRadius: 2,
             overflow: "auto",
-            overflowX: "hidden",
+            overflowX: "auto",
             overflowY: "auto",
           }}
-          className="custom-scrollbar"
         >
           <Avatar
             sx={{
@@ -133,6 +184,7 @@ const Chat = () => {
             Education, etc. But avoid sharing personal information.
           </Typography>
           <Button
+            onClick={handleDeleteChats}
             sx={{
               width: "200px",
               my: "auto",
@@ -193,6 +245,7 @@ const Chat = () => {
           className="custom-scrollbar"
         >
           {chatMessages.map((chat, index) => (
+            //Box que contiene el chat para enviar
             <Box
               key={index}
               sx={{
@@ -207,17 +260,18 @@ const Chat = () => {
         </Box>
         <div
           style={{
+            display: "flex",
             width: "100%",
             padding: "10px ",
             borderRadius: 8,
             backgroundColor: "rgb(17,27,29)",
-            display: "flex",
             margin: "10px 0",
           }}
         >
           <input
             ref={inputRef}
             type="text"
+            onKeyDown={handleKeyPress}
             style={{
               width: "100%",
               display: "flex",
