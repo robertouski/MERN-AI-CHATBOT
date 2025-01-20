@@ -22,6 +22,21 @@ function processTextBlocks(blocks: MessageBlock[]): MessageBlock[] {
         /### (.*?)(?=\n|$)/g,
         "<h3>$1</h3>"
       );
+      // Convertir _texto_ a cursiva
+      block.content = block.content.replace(
+        /_(.*?)_/g,
+        "<em>$1</em>"
+      );
+      // Convertir ++texto++ a subrayado
+      block.content = block.content.replace(
+        /\+\+(.*?)\+\+/g,
+        "<u>$1</u>"
+      );
+      // Convertir ~~texto~~ a tachado
+      block.content = block.content.replace(
+        /~~(.*?)~~/g,
+        "<del>$1</del>"
+      );
     }
     return block;
   });
@@ -89,11 +104,11 @@ const ChatItem: React.FC<ChatItemProps> = ({ content, role }) => {
         )}
       </Avatar>
       <Box
+      className="custom-scrollbar"
       sx={{
         maxWidth: '800px',
         width: '100%',
         overflowX: 'auto',
-        className: "custom-scrollbar"
       }}>
         {messageBlocks.map((block, index) => (
           <React.Fragment key={index}>
@@ -111,9 +126,10 @@ const ChatItem: React.FC<ChatItemProps> = ({ content, role }) => {
                 {block.content}
               </SyntaxHighlighter>
             ) : (
-              <Typography sx={{ fontSize: "20px", maxWidth: "800px" }}>
-                {block.content}
-              </Typography>
+              <Typography><div
+              style={{ fontSize: "20px" }}
+              dangerouslySetInnerHTML={{ __html: block.content }}
+            /></Typography>
             )}
           </React.Fragment>
         ))}

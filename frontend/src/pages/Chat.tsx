@@ -111,7 +111,7 @@ const Chat = () => {
           });
         });
     }
-  }, [auth?.isLoggedIn, auth?.user]);
+  }, [auth]);
 
   return (
     <Box
