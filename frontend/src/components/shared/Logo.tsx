@@ -31,7 +31,7 @@ const Logo = () => {
             margin: "10px",
           }}
         >
-          <span style ={{ fontSize: "20px"}}>MERN</span>-GPT
+          <span style ={{ fontSize: "20px"}}>MERN</span><span style ={{ fontSize: "15px"}}>-GPT</span>
         </Typography>
     </div>
   );
