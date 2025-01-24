@@ -7,8 +7,30 @@ export const loginUser = async (email: string, password: string) => {
     throw new Error(res.data.message);
   }
   const data = await res.data;
+  console.log("data en api communicator", data);
   return data;
 };
+export const signupUser = async (name: string, lastname: string, email: string, password: string) => {
+  console.log("Paso la info por el api communicator", name, lastname, email, password);
+  const res = await axios.post("/user/signup", { name, lastname, email, password });
+  if (res.status !== 201) {
+    console.log("Unable to Signup");
+    throw new Error(res.data.message);
+  }
+  const data = await res.data;
+  console.log("data en api communicator signupuser", data);
+  return data;
+};
+export const logoutUser = async () => {
+  const res = await axios.get("/user/logout");
+  if (res.status !== 200) {
+    console.log("Unable to logout");
+    throw new Error(res.data.message);
+  }
+  const data = await res.data;
+  return data;
+};
+
 export const sendChatRequest = async (message: string) => {
   try {
     const res = await axios.post("/chat/new", { message });

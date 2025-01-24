@@ -3,27 +3,35 @@ import CustomizedInput from "../components/shared/CustomizedInput";
 import { IoIosLogIn } from "react-icons/io";
 import { toast } from "react-hot-toast";
 import { useAuth } from "../context/AuthContext";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const auth = useAuth();
-  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    const email = formData.get("email") as string
-    const password = formData.get("password") as string
-    try{
-      toast.loading(
-        "Logging in...",{
-          id: "login"}
-      )
-      await auth?.login(email,password)
-      toast.success("Logged In Sucessfully",{id: "login"})
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    try {
+      toast.loading("Logging in...", {
+        id: "login",
+      });
+      await auth?.login(email, password);
+      toast.success("Logged In Sucessfully", { id: "login" });
+    } catch (error) {
+      console.log(error);
+      toast.error("Error Logging In", { id: "login" });
     }
-    catch(error){
-      console.log(error)
-      toast.error("Error Logging In",{id: "login"})
+  };
+
+  useEffect(() => {
+    if (auth?.user) {
+      navigate("/chat");
     }
-  }
+  }, [auth, navigate]);
+
   return (
     <Box width={"100%"} height={"100%"} display={"flex"} flex={1}>
       <Box padding={8} mt={8} display={{ md: "flex", sm: "none", xs: "none" }}>
@@ -35,11 +43,11 @@ const Login = () => {
         justifyContent={"center"}
         alignItems={"center"}
         padding={2}
-        ml={{xs: 0, md: 8}}
-        mt={{xs: 0, md: 9}}
+        ml={{ xs: 0, md: 8 }}
+        mt={{ xs: 0, md: 9 }}
       >
         <form
-          onSubmit = {(handleSubmit)}
+          onSubmit={handleSubmit}
           style={{
             margin: "auto",
             padding: "30px",
@@ -77,7 +85,7 @@ const Login = () => {
                 color: "skyblue",
                 hover: { bgcolor: "white", color: "black" },
               }}
-              endIcon ={<IoIosLogIn />}
+              endIcon={<IoIosLogIn />}
               variant="contained"
             >
               Login

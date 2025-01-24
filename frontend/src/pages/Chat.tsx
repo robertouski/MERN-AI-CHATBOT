@@ -11,6 +11,8 @@ import {
 } from "../helpers/api-communicator";
 import "../components/chat/Chat.css";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+
 type Message = {
   _id?: string;
   content: string;
@@ -18,6 +20,7 @@ type Message = {
 };
 
 const Chat = () => {
+  const navigate = useNavigate();
   const chatContainerRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const auth = useAuth();
@@ -90,7 +93,7 @@ const Chat = () => {
   }, [chatMessages]);
 
   useLayoutEffect(() => {
-    if (auth?.isLoggedIn && auth.user) {
+    if (auth?.isLoggedIn && auth?.user) {
       toast.loading("Loading Chats...", {
         id: "loadchats",
         position: "top-right",
@@ -113,6 +116,15 @@ const Chat = () => {
     }
   }, [auth]);
 
+useEffect(() => {
+  console.log("este es auth", auth);
+  if (!auth?.user) {
+    navigate("/login");
+    return;
+  }
+}, [auth, navigate]);
+
+console.log('Auth state on render:', auth);
   return (
     <Box
       sx={{
@@ -161,7 +173,7 @@ const Chat = () => {
             }}
           >
             {auth?.user?.name[0] ?? "?"}
-            {auth?.user?.name.split(" ")[1][0] ?? "?"}
+            {auth?.user?.lastname[0] ?? "?"}
           </Avatar>
           <Typography
             sx={{

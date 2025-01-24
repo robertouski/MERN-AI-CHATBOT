@@ -98,9 +98,10 @@ const ChatItem: React.FC<ChatItemProps> = ({ content, role }) => {
         {role === "assistant" ? (
           <img src="minimalistLogo.png" alt="openai" width={"60px"} />
         ) : (
-          `${auth?.user?.name[0] ?? "?"}${
-            auth?.user?.name.split(" ")[1][0] ?? "?"
-          }`
+          <>
+          {auth?.user?.name ? auth.user.name[0] : "?"}
+          {auth?.user?.lastname ? auth.user.lastname[0] : "?"}
+        </>
         )}
       </Avatar>
       <Box

@@ -35,14 +35,13 @@ const StyledTextField = styled(TextField)({
 
 type Props = {
   name: string;
+  lastname?: string;
   type: string;
   label: string;
 };
 
 const CustomizedInput = (props: Props) => {
-  return (
-    <StyledTextField name={props.name} label={props.label} type={props.type} />
-  );
+  return <StyledTextField name={props.name} label={props.label} type={props.type} />;
 };
 
 export default CustomizedInput;
