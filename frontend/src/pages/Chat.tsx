@@ -12,7 +12,6 @@ import {
 import "../components/chat/Chat.css";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
-
 type Message = {
   _id?: string;
   content: string;
@@ -140,6 +139,8 @@ console.log('Auth state on render:', auth);
         sx={{
           display: { md: "flex", xs: "none", sm: "none" },
           flex: 0.2,
+          height: "84.5vh",
+          mt:4,
           flexDirection: "column",
         }}
       >
@@ -148,7 +149,7 @@ console.log('Auth state on render:', auth);
           sx={{
             display: "flex",
             width: "100%",
-            height: "60vh",
+            height: "100vh",
             bgcolor: "#0D1C24",
             flex: 1,
             flexDirection: "column",
@@ -198,7 +199,7 @@ console.log('Auth state on render:', auth);
           <Button
             onClick={handleDeleteChats}
             sx={{
-              width: "200px",
+              width: "80%",
               my: "auto",
               color: "white",
               fontWeight: "700",
@@ -221,7 +222,7 @@ console.log('Auth state on render:', auth);
           flexDirection: "column",
           mx: "auto",
           width: "100%",
-          maxWidth: "900px",
+          height: "100%",
         }}
       >
         <Typography
@@ -240,7 +241,7 @@ console.log('Auth state on render:', auth);
         <Box
           sx={{
             width: "100%",
-            height: "60vh",
+            height: "70vh",
             flex: 1,
             borderRadius: 3,
             mx: "auto",
@@ -273,11 +274,11 @@ console.log('Auth state on render:', auth);
         <div
           style={{
             display: "flex",
-            width: "100%",
-            padding: "10px ",
+            flexDirection: "row",
+            width: "102%",
             borderRadius: 8,
             backgroundColor: "rgb(17,27,29)",
-            margin: "10px 0",
+            margin: "10px 0px 20px 0px",
           }}
         >
           <input
@@ -289,7 +290,7 @@ console.log('Auth state on render:', auth);
               display: "flex",
               flex: 1,
               backgroundColor: "transparent",
-              padding: "10px",
+              padding: "30px",
               border: "none",
               outline: "none",
               color: "white",

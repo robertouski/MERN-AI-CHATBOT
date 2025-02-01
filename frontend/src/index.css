@@ -9,6 +9,10 @@ body{
 
 }
 
+.rotate{
+  animation: rotate 8s linear infinite;
+}
+
 .image-inverted{
   filter: invert(0%);
 }
@@ -24,3 +28,11 @@ body{
   letter-spacing: 1px;
 }
 
+@keyframes rotate{
+  0%{
+    transform: rotate(0deg);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
+}
