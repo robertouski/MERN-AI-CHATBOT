@@ -14,7 +14,13 @@ const NavigationLink = (props: Props) => {
       onClick={props.onClick}
       className="nav-link"
       to={props.to}
-      style={{ backgroundColor: props.bg, color: props.textColor }}
+      style={{ 
+        backgroundColor: props.bg, 
+        color: props.textColor,
+        padding: '10px 20px',  
+        fontSize: '1.2rem',
+        margin: '0 10px',
+      }}
     >
       {props.text}
     </Link>

@@ -10,10 +10,10 @@ export const Footer = () => {
             padding: 20,
             minHeight: "20vh",
             maxHeight: "30vh",
-            marginTop: 50,
+            marginTop: 40,
           }}
           >
-            <p style={{ color: "white", textAlign: "center", fontSize: 30 }}>
+            <p style={{ color: "white", textAlign: "center", fontSize: 30, padding: "10px" }}>
               Built by
               <span>
                 <Link className="nav-link" to= {'https://github.com/robertouski'}>robertouski</Link>

@@ -1,4 +1,3 @@
-import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Logo from "./shared/Logo";
@@ -9,9 +8,9 @@ const Header = () => {
   const auth = useAuth();
   return (
     <AppBar
-      sx={{ bgcolor: "transparent", position: "static", boxShadow: "none" }}
+      sx={{ bgcolor: "transparent", position: "fixed" , boxShadow: "none" }}
     >
-      <Toolbar sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <Toolbar sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", px: 0 }}>
         <Logo />
         <div style={{ display: "flex" }}>
           {auth?.isLoggedIn ? (
