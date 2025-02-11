@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import User from "../models/user.js";
 import { configureOpenAI } from "../config/openai-config.js";
 import { ChatCompletionRequestMessage, OpenAIApi } from "openai";
+
 export const generateChatCompletion = async (
   req: Request,
   res: Response,

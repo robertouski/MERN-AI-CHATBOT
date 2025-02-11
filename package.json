@@ -5,7 +5,9 @@
   "dependencies": {
     "@types/axios": "^0.14.4",
     "axios": "^1.7.9",
-    "html-react-parser": "^5.2.2"
+    "html-react-parser": "^5.2.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "concurrently": "^9.1.2"
