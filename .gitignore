@@ -4,4 +4,3 @@ dist/
 backend/.env
 .vscode/*
 !.vscode/extensions.json
-README.md
