@@ -13,27 +13,38 @@ What things you need to install the software and how to install them:
 ```bash
 node --version
 npm --version
+```
 
-Clone the repository
+### Installing
+Follow these steps to get a development environment running:
+
+```bash
+Clone the repository:
 
 git clone https://github.com/yourusername/MERN-AI-CHATBOT.git
 cd MERN-AI-CHATBOT
 
-
-Setup Backend
+Setup Backend:
 
 cd backend
 npm install
 npm run dev
 
-
-Setup Frontend
+Setup Frontend:
 
 cd frontend
 npm install
 npm run dev
+```
 
-Built With
+### Usage
+Provide instructions on how to use the system such as:
+
+Starting the chatbot conversation
+Viewing chat history
+Deleting chat history
+
+### Built With
 React - The web framework used for the frontend
 Node.js - Server environment
 Express - Web framework for the backend
