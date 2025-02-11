@@ -21,7 +21,7 @@ Follow these steps to get a development environment running:
 ```bash
 Clone the repository:
 
-git clone https://github.com/yourusername/MERN-AI-CHATBOT.git
+git clone https://github.com/robertouski/MERN-AI-CHATBOT.git
 cd MERN-AI-CHATBOT
 
 Setup Backend:
@@ -36,12 +36,29 @@ cd frontend
 npm install
 npm run dev
 ```
+### Environment Config
+To ensure the application runs correctly on your local machine, you will need to set up environment variables.
+```bash
+Here's an explanation of each environment variable:
+
+MONGODB_URL: The connection string to your MongoDB database. Ensure you replace this with the actual URL of your MongoDB instance, which might look something like mongodb://localhost:27017/yourdatabasename.
+
+PORT: The port number on which your server will listen. The default value is 3000, but you can change it based on your preference or requirements.
+
+OPENAI_ORG_ID: This is your organization ID from OpenAI. It is used to identify your organization in API requests to the OpenAI services.
+
+OPENAI_API_KEY: Your API key for accessing OpenAI's API. This key is crucial for making authenticated requests to OpenAI for processing and generating responses based on the input received by your application.
+
+JWT_SECRET: A secret key used for signing and verifying JSON Web Tokens (JWT). This should be a long, complex string to ensure security.
+
+COOKIE_SECRET: A secret used for signing and verifying cookies. The default value provided is "auth_token", but it is strongly recommended to change this to a more secure string in a production environment.
+```
 
 ### Usage
 ```bash
-Provide instructions on how to use the system such as:
-
-Starting the chatbot conversation
+--After you log in--
+While in chat page you can:
+Starting AI chatbot conversation
 Viewing chat history
 Deleting chat history
 ```
