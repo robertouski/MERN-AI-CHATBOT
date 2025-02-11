@@ -35,7 +35,6 @@ const Chat = () => {
   const handleSubmit = async () => {
     const content = inputRef.current?.value.trim() as string;
     if (!content) {
-      // Podrías mostrar una notificación o simplemente no hacer nada si el contenido está vacío
       toast.error("Please enter a message before sending.");
       return;
     }
@@ -116,14 +115,12 @@ const Chat = () => {
   }, [auth]);
 
 useEffect(() => {
-  console.log("este es auth", auth);
   if (!auth?.user) {
     navigate("/login");
     return;
   }
 }, [auth, navigate]);
 
-console.log('Auth state on render:', auth);
   return (
     <Box
       sx={{
@@ -131,16 +128,18 @@ console.log('Auth state on render:', auth);
         flex: 1,
         width: "100%",
         height: "90vh",
-        mt: 3,
+        mt: 10,
         gap: 3,
       }}
     >
       <Box
         sx={{
           display: { md: "flex", xs: "none", sm: "none" },
-          flex: 0.2,
-          height: "84.5vh",
-          mt:4,
+          flex: 0.25,
+          width: "100%",
+          mx: "auto",
+          height: "auto",
+          mt: 4,
           flexDirection: "column",
         }}
       >
@@ -148,12 +147,13 @@ console.log('Auth state on render:', auth);
           className="custom-scrollbar"
           sx={{
             display: "flex",
+            gap: 1,
             width: "100%",
             height: "100vh",
             bgcolor: "#0D1C24",
             flex: 1,
             flexDirection: "column",
-            mx: "40px",
+            mx: "auto",
             mt: 2,
             borderRadius: 2,
             overflow: "auto",
@@ -201,10 +201,10 @@ console.log('Auth state on render:', auth);
             sx={{
               width: "80%",
               my: "auto",
+              mx: "auto",
               color: "white",
               fontWeight: "700",
               borderRadius: 3,
-              mx: "auto",
               bgcolor: red[400],
               ":hover": {
                 bgcolor: red[500],
@@ -218,7 +218,7 @@ console.log('Auth state on render:', auth);
       <Box
         sx={{
           display: "flex",
-          flex: 0.75,
+          flex: 1,
           flexDirection: "column",
           mx: "auto",
           width: "100%",
@@ -241,7 +241,7 @@ console.log('Auth state on render:', auth);
         <Box
           sx={{
             width: "100%",
-            height: "70vh",
+            height: "80vh",
             flex: 1,
             borderRadius: 3,
             mx: "auto",

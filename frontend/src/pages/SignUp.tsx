@@ -39,7 +39,7 @@ const SignUp = () => {
   return (
     <Box width={"100%"} height={"100%"} display={"flex"} flex={1}>
       <Box padding={8} mt={8} display={{ md: "flex", sm: "none", xs: "none" }}>
-        <img src="robotSalute.png" alt="community" style={{ width: "400px" }} />
+        <img src="robotSalute.png" alt="community" style={{ width: "550px", margin: "auto" }} />
       </Box>
       <Box
         display={"flex"}
@@ -77,7 +77,7 @@ const SignUp = () => {
               Signup
             </Typography>
             <CustomizedInput type="text" name="name" label="Name" />
-            <CustomizedInput type="text" name="lastname" label="LastName" />
+            <CustomizedInput type="text" name="lastname" label="Last name" />
             <CustomizedInput type="email" name="email" label="Email" />
             <CustomizedInput type="password" name="password" label="Password" />
             <Button

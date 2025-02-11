@@ -35,7 +35,7 @@ const Login = () => {
   return (
     <Box width={"100%"} height={"100%"} display={"flex"} flex={1}>
       <Box padding={8} mt={8} display={{ md: "flex", sm: "none", xs: "none" }}>
-        <img src="robotSalute.png" alt="community" style={{ width: "400px" }} />
+        <img src="robotSalute.png" alt="community" style={{ width: "550px", height: "550px", margin: "auto" }} />
       </Box>
       <Box
         display={"flex"}
@@ -50,10 +50,11 @@ const Login = () => {
           onSubmit={handleSubmit}
           style={{
             margin: "auto",
-            padding: "30px",
+            padding: "50px",
             boxShadow: "10px 10px 20px #000",
             borderRadius: "10px",
             border: "none",
+            width: "400px",
           }}
         >
           <Box
