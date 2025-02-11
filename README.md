@@ -75,3 +75,5 @@ Express - Web framework for the backend
 MongoDB - Database system
 OpenAI API - AI model integration for chat functionality
 ```
+
+NOTE: Swagger documentation in case you want to modify Fronted UI ✅
