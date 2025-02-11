@@ -11,8 +11,8 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install the software and how to install them:
 
 ```bash
-node --version
-npm --version
+node --version >= v18.20.2
+npm --version >= 10.7.0
 ```
 
 ### Installing
