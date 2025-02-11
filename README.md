@@ -38,15 +38,18 @@ npm run dev
 ```
 
 ### Usage
+```bash
 Provide instructions on how to use the system such as:
 
 Starting the chatbot conversation
 Viewing chat history
 Deleting chat history
-
+```
 ### Built With
+```bash
 React - The web framework used for the frontend
 Node.js - Server environment
 Express - Web framework for the backend
 MongoDB - Database system
 OpenAI API - AI model integration for chat functionality
+```
