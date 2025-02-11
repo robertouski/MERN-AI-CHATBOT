@@ -37,7 +37,7 @@ npm install
 npm run dev
 ```
 ### Environment Config
-To ensure the application runs correctly on your local machine, you will need to set up environment variables.
+To ensure the application runs correctly on your local machine, you will need to set up environment variables on Backend file ".env".
 ```bash
 Here's an explanation of each environment variable:
 
@@ -57,10 +57,15 @@ COOKIE_SECRET: A secret used for signing and verifying cookies. The default valu
 ### Usage
 ```bash
 --After you log in--
-While in chat page you can:
-Starting AI chatbot conversation
-Viewing chat history
-Deleting chat history
+While in chat page you need to:
+1.-Sign Up
+2.- Log in
+3.- Go to Chat page
+
+NOW you can! 
+-start AI chatbot conversation
+-view chat history
+-and delete chat history
 ```
 ### Built With
 ```bash
